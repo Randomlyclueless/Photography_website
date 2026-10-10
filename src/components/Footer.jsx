@@ -1,122 +1,152 @@
 import { Link } from "react-router-dom";
-import { FiInstagram, FiMail, FiPhone, FiMapPin, FiArrowRight } from "react-icons/fi";
-import { useState } from "react";
+import { FiArrowUp, FiArrowUpRight } from "react-icons/fi";
+import { FaInstagram, FaWhatsapp } from "react-icons/fa";
+
+const WHATSAPP_NUMBER = "919876543210";
+
+const navigationLinks = [
+  { label: "Home", path: "/" },
+  { label: "Portfolio", path: "/portfolio" },
+  { label: "Services", path: "/services" },
+  { label: "About", path: "/about" },
+  { label: "Contact", path: "/contact" },
+];
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const currentYear = new Date().getFullYear();
 
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email) {
-      setSubmitted(true);
-      setEmail("");
-      setTimeout(() => setSubmitted(false), 3000);
-    }
+  const handleBackToTop = (event) => {
+    event.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
-    <footer className="bg-dark text-secondary pt-20 pb-10 border-t border-secondary/10 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,#5A1E2B,transparent)] opacity-10 pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-16 border-b border-secondary/10">
-          
-          {/* Brand Bio */}
-          <div className="md:col-span-2 space-y-6">
-            <h3 className="font-serif text-3xl tracking-widest text-accent font-bold">FRAMES BY TANAY</h3>
-            <p className="font-sans text-secondary/60 text-sm max-w-md leading-relaxed font-light">
-              Premium visual storytelling and photography services. Capturing authentic, timeless emotions of weddings, portraits, and commercial environments across India and worldwide.
+    <footer className="bg-primary text-secondary">
+      <div className="mx-auto max-w-[1400px] px-5 pb-8 pt-16 sm:px-10 sm:pt-20 lg:px-16">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 gap-12 border-b border-secondary/20 pb-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+          {/* Brand Section */}
+          <div className="sm:col-span-2 lg:col-span-5">
+            <Link to="/" className="inline-block">
+              <h2 className="font-serif text-3xl tracking-wide sm:text-4xl">
+                Tanay Kardile
+              </h2>
+
+              <span className="mt-2 block text-xs uppercase tracking-[0.3em] text-secondary/60">
+                The art &amp; beyond
+              </span>
+            </Link>
+
+            <p className="mt-6 max-w-sm text-sm leading-7 text-secondary/70">
+              Five years of capturing stories, chasing light, and finding beauty
+              in the details. Every frame has a story worth telling.
             </p>
-            <div className="flex space-x-4">
+
+            {/* Social Media Links */}
+            <div className="mt-7 flex items-center gap-3">
               <a
                 href="https://www.instagram.com/random_clicks.dng"
                 target="_blank"
-                rel="noreferrer"
-                className="text-secondary/80 hover:text-accent transition-colors p-3 bg-secondary/5 rounded-full hover:bg-secondary/10 border border-secondary/10"
-                aria-label="Instagram Profile"
+                rel="noopener noreferrer"
+                aria-label="Visit Tanay's Instagram"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-secondary/25 transition-all duration-300 hover:border-coral hover:bg-coral hover:text-dark"
               >
-                <FiInstagram size={18} />
+                <FaInstagram size={18} />
+              </a>
+
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Contact Tanay on WhatsApp"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-secondary/25 transition-all duration-300 hover:border-coral hover:bg-coral hover:text-dark"
+              >
+                <FaWhatsapp size={18} />
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-6">
-            <h4 className="font-sans text-xs tracking-[0.25em] uppercase text-accent font-semibold">Explore</h4>
-            <ul className="space-y-4 font-sans text-xs tracking-wider">
-              <li>
-                <Link to="/" className="text-secondary/60 hover:text-secondary transition-colors uppercase font-light">Home</Link>
-              </li>
-              <li>
-                <Link to="/portfolio" className="text-secondary/60 hover:text-secondary transition-colors uppercase font-light">Portfolio</Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-secondary/60 hover:text-secondary transition-colors uppercase font-light">Services</Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-secondary/60 hover:text-secondary transition-colors uppercase font-light">About Me</Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-secondary/60 hover:text-secondary transition-colors uppercase font-light">Contact</Link>
-              </li>
-            </ul>
+          {/* Navigation Links */}
+          <div className="lg:col-span-3 lg:col-start-7">
+            <h3 className="mb-6 text-xs font-semibold uppercase tracking-[0.25em] text-secondary/50">
+              Explore
+            </h3>
+
+            <nav className="flex flex-col items-start gap-4">
+              {navigationLinks.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className="group inline-flex items-center gap-2 text-sm text-secondary/80 transition-colors duration-300 hover:text-coral"
+                >
+                  {item.label}
+
+                  <FiArrowUpRight
+                    size={14}
+                    className="opacity-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
+                  />
+                </Link>
+              ))}
+            </nav>
           </div>
 
-          {/* Contact Details & Newsletter */}
-          <div className="space-y-6">
-            <h4 className="font-sans text-xs tracking-[0.25em] uppercase text-accent font-semibold">Newsletter</h4>
-            <p className="font-sans text-secondary/60 text-xs leading-relaxed font-light">
-              Subscribe to receive updates on destination schedules, photography tips, and travel logs.
+          {/* Contact Section */}
+          <div className="lg:col-span-3">
+            <h3 className="mb-6 text-xs font-semibold uppercase tracking-[0.25em] text-secondary/50">
+              Get in touch
+            </h3>
+
+            <p className="mb-5 max-w-xs text-sm leading-7 text-secondary/70">
+              Have a story to capture, an event to remember, or an idea to bring
+              to life? Let's talk.
             </p>
-            <form onSubmit={handleSubscribe} className="relative flex items-center border-b border-secondary/20 focus-within:border-accent transition-colors py-2">
-              <input
-                type="email"
-                placeholder="YOUR EMAIL"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="bg-transparent border-none text-xs font-sans tracking-widest text-secondary focus:outline-none w-full placeholder:text-secondary/30 pr-8"
-              />
-              <button
-                type="submit"
-                className="absolute right-0 text-secondary/60 hover:text-accent transition-colors"
-                aria-label="Subscribe"
+
+            <a
+              href="mailto:tanaykardile@gmail.com"
+              className="inline-flex items-start gap-2 break-all text-sm transition-colors duration-300 hover:text-coral"
+            >
+              <span>tanaykardile@gmail.com</span>
+              <FiArrowUpRight size={16} className="mt-0.5 shrink-0" />
+            </a>
+
+            <div className="mt-7">
+              <Link
+                to="/contact"
+                className="group inline-flex items-center gap-3 border-b border-coral pb-2 text-sm transition-colors duration-300 hover:text-coral"
               >
-                <FiArrowRight size={16} />
-              </button>
-            </form>
-            {submitted && (
-              <p className="text-[10px] text-accent font-sans tracking-wider uppercase">
-                Thank you for subscribing!
-              </p>
-            )}
-          </div>
-          
-        </div>
-
-        {/* Contact Info Footer Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 py-10 border-b border-secondary/10 font-sans text-xs text-secondary/60 font-light tracking-wider">
-          <div className="flex items-center space-x-3">
-            <FiPhone size={14} className="text-accent" />
-            <span>+91 98765 43210</span>
-          </div>
-          <div className="flex items-center space-x-3">
-            <FiMail size={14} className="text-accent" />
-            <span>hello@framesbytanay.com</span>
-          </div>
-          <div className="flex items-center space-x-3">
-            <FiMapPin size={14} className="text-accent" />
-            <span>Pune, Maharashtra, India</span>
+                Let's work together
+                <FiArrowUpRight
+                  size={16}
+                  className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                />
+              </Link>
+            </div>
           </div>
         </div>
 
-        {/* Legal Credits */}
-        <div className="flex flex-col sm:flex-row justify-between items-center pt-8 text-[10px] tracking-[0.25em] font-sans text-secondary/40 uppercase">
-          <p>&copy; 2026 Frames by Tanay. All Rights Reserved.</p>
-          <p className="mt-2 sm:mt-0 font-light">
-            Designed for <span className="text-accent">Tanay Kardile</span>
+        {/* Footer Bottom Bar */}
+        <div className="flex flex-col gap-5 pt-7 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs leading-6 tracking-wide text-secondary/55">
+            © {currentYear} Tanay Kardile. All rights reserved.
           </p>
+
+          <p className="text-xs tracking-wide text-secondary/55">
+            Made with care, one frame at a time.
+          </p>
+
+          <button
+            type="button"
+            onClick={handleBackToTop}
+            className="group inline-flex items-center gap-2 self-start text-xs uppercase tracking-[0.2em] text-secondary/70 transition-colors duration-300 hover:text-coral sm:self-auto"
+          >
+            Back to top
+            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-secondary/25 transition-all duration-300 group-hover:border-coral group-hover:bg-coral group-hover:text-dark">
+              <FiArrowUp size={15} />
+            </span>
+          </button>
         </div>
       </div>
     </footer>

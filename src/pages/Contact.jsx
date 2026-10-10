@@ -1,95 +1,218 @@
-import BookingForm from "../components/BookingForm";
+import { motion } from "framer-motion";
+import { FiArrowRight, FiMail, FiInstagram, FiMapPin } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import PageTransition from "../components/PageTransition";
-import { FiPhone, FiMail, FiMapPin, FiClock } from "react-icons/fi";
+
+const WHATSAPP_NUMBER = "9356613180";
+
+const WHATSAPP_MESSAGE =
+  "Hi Tanay, I'd like to enquire about your photography services. Could you share more details about your availability and pricing?";
+
+const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+  WHATSAPP_MESSAGE,
+)}`;
 
 export default function Contact() {
   return (
     <PageTransition>
-      {/* Header */}
-      <section className="pt-36 pb-12 bg-secondary text-dark text-center">
-        <div className="max-w-4xl mx-auto px-6 space-y-4">
-          <span className="font-sans text-[11px] tracking-[0.35em] uppercase text-primary font-bold">
-            GET IN TOUCH
-          </span>
-          <h1 className="font-serif text-5xl md:text-7xl font-light text-primary tracking-wide">
-            Contact & Bookings
-          </h1>
-          <p className="font-sans text-xs text-dark/50 max-w-md mx-auto leading-relaxed tracking-wider font-light font-sans">
-            Ready to secure your shoot date or inquire about custom packages? Reach out using the form or details below.
-          </p>
-        </div>
-      </section>
+      <main className="min-h-screen bg-secondary text-dark">
+        {/* Page introduction */}
+        <section className="bg-primary px-5 pb-16 pt-36 text-secondary sm:px-10 sm:pb-20 md:pt-40 lg:px-16">
+          <div className="mx-auto max-w-[1400px]">
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-6 text-[10px] font-bold uppercase tracking-[0.25em] text-accent"
+            >
+              Let's talk
+            </motion.p>
 
-      {/* Main Grid */}
-      <section className="pb-28 bg-secondary text-dark">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-          
-          {/* Details (Left) */}
-          <div className="lg:col-span-5 space-y-12 text-left">
-            <div className="space-y-6">
-              <h2 className="font-serif text-3xl font-light text-primary leading-tight font-serif">
-                Let's discuss <br />
-                your creative vision.
+            <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7 }}
+                className="font-serif text-6xl leading-[0.85] tracking-[-0.05em] sm:text-8xl lg:col-span-7 lg:text-9xl"
+              >
+                Let's make
+                <br />
+                it memorable<span className="text-coral">.</span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.7 }}
+                className="max-w-md text-sm leading-7 text-secondary/70 lg:col-span-4 lg:col-start-9"
+              >
+                Have an event, a creative idea, a product, or a story you would
+                like photographed? Let's start a conversation and bring your
+                vision to life.
+              </motion.p>
+            </div>
+          </div>
+        </section>
+
+        {/* Contact content */}
+        <section className="px-5 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-24">
+          <div className="mx-auto grid max-w-[1400px] gap-14 lg:grid-cols-12">
+            {/* Contact information */}
+            <div className="lg:col-span-4">
+              <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+                Get in touch
+              </p>
+
+              <h2 className="font-serif text-4xl leading-tight sm:text-5xl">
+                Every great photograph begins with a conversation.
               </h2>
-              <p className="font-sans text-sm text-dark/70 leading-relaxed font-light font-sans">
-                To guarantee focus and artistic quality, we accept a limited number of commissions each month. Secure your date early, particularly for wedding seasons (November to March).
+
+              <p className="mt-5 text-sm leading-7 text-dark/65">
+                Tell Tanay about your idea, the occasion, or the project you
+                have in mind. Whether it's a portrait, wedding, wildlife
+                assignment, or commercial shoot, he'd love to hear from you.
               </p>
+
+              <div className="mt-10 space-y-6">
+                <a
+                  href="mailto:tanaykardile@gmail.com"
+                  className="group flex items-center gap-4"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-dark/15 text-primary transition-colors group-hover:border-primary">
+                    <FiMail size={18} />
+                  </span>
+
+                  <span>
+                    <span className="block text-[9px] uppercase tracking-[0.16em] text-dark/50">
+                      Email
+                    </span>
+                    <span className="mt-1 block break-all text-sm">
+                      tanaykardile@gmail.com
+                    </span>
+                  </span>
+                </a>
+
+                <a
+                  href="https://www.instagram.com/random_clicks.dng"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-dark/15 text-primary transition-colors group-hover:border-primary">
+                    <FiInstagram size={18} />
+                  </span>
+
+                  <span>
+                    <span className="block text-[9px] uppercase tracking-[0.16em] text-dark/50">
+                      Instagram
+                    </span>
+                    <span className="mt-1 block text-sm">
+                      @random_clicks.dng
+                    </span>
+                  </span>
+                </a>
+
+                <div className="flex items-center gap-4">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-dark/15 text-primary">
+                    <FiMapPin size={18} />
+                  </span>
+
+                  <span>
+                    <span className="block text-[9px] uppercase tracking-[0.16em] text-dark/50">
+                      Location
+                    </span>
+                    <span className="mt-1 block text-sm">
+                      Location can be discussed during enquiry
+                    </span>
+                  </span>
+                </div>
+              </div>
             </div>
 
-            {/* Core details */}
-            <div className="space-y-6 font-sans text-xs tracking-wider font-sans">
-              <div className="flex items-start space-x-4">
-                <FiPhone className="text-accent mt-0.5" size={16} />
-                <div>
-                  <h4 className="font-bold text-primary mb-1 uppercase font-sans">PHONE / WHATSAPP</h4>
-                  <p className="text-dark/70 font-light">+91 98765 43210</p>
-                </div>
+            {/* WhatsApp booking panel */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="relative flex flex-col justify-between overflow-hidden bg-primary p-7 text-secondary sm:p-10 lg:col-span-7 lg:col-start-6 lg:min-h-[430px] lg:p-12"
+            >
+              {/* Decorative circle */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full border border-secondary/10"
+              />
+
+              <div className="relative">
+                <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.22em] text-accent">
+                  Photography enquiries
+                </p>
+
+                <h2 className="max-w-xl font-serif text-4xl leading-tight sm:text-6xl">
+                  Have a vision?
+                  <br />
+                  Let's bring it to life.
+                </h2>
+
+                <p className="mt-5 max-w-lg text-sm leading-7 text-secondary/70">
+                  Message Tanay directly on WhatsApp to discuss your
+                  requirements, preferred dates, pricing, and the kind of
+                  photographs you're looking for.
+                </p>
               </div>
 
-              <div className="flex items-start space-x-4">
-                <FiMail className="text-accent mt-0.5" size={16} />
-                <div>
-                  <h4 className="font-bold text-primary mb-1 uppercase font-sans">EMAIL DIRECT</h4>
-                  <p className="text-dark/70 font-light font-sans">hello@framesbytanay.com</p>
-                </div>
-              </div>
+              <div className="relative mt-12">
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex w-full items-center justify-between gap-4 bg-[#25D366] px-5 py-5 text-left text-white transition-colors hover:bg-secondary hover:text-primary sm:px-7"
+                >
+                  <span className="flex items-center gap-4">
+                    <FaWhatsapp size={27} />
 
-              <div className="flex items-start space-x-4">
-                <FiMapPin className="text-accent mt-0.5" size={16} />
-                <div>
-                  <h4 className="font-bold text-primary mb-1 uppercase font-sans">STUDIO LOCATION</h4>
-                  <p className="text-dark/70 font-light font-sans">Koregaon Park, Pune, Maharashtra, India</p>
-                </div>
-              </div>
+                    <span>
+                      <span className="block text-[9px] font-medium uppercase tracking-[0.16em] opacity-80">
+                        Start a conversation
+                      </span>
 
-              <div className="flex items-start space-x-4">
-                <FiClock className="text-accent mt-0.5" size={16} />
-                <div>
-                  <h4 className="font-bold text-primary mb-1 uppercase font-sans">BUSINESS HOURS</h4>
-                  <p className="text-dark/70 font-light font-sans">Monday &ndash; Saturday: 10:00 AM &ndash; 7:00 PM IST</p>
-                  <p className="text-dark/50 text-[10px] font-light mt-1 font-sans">Average Response: Within 1 Hour</p>
-                </div>
-              </div>
-            </div>
+                      <span className="mt-1 block text-sm font-bold sm:text-base">
+                        Chat with Tanay on WhatsApp
+                      </span>
+                    </span>
+                  </span>
 
-            {/* Embedded Map Graphic Placeholder */}
-            <div className="border border-primary/10 aspect-[16/9] bg-secondary/50 relative overflow-hidden group flex flex-col justify-center items-center text-center p-8">
-              <div className="absolute inset-0 bg-[radial-gradient(#5A1E2B_1px,transparent_1px)] [background-size:16px_16px] opacity-10" />
-              <FiMapPin size={24} className="text-accent mb-3 animate-bounce" />
-              <h4 className="font-serif text-lg text-primary mb-1">Serving Worldwide from Pune</h4>
-              <p className="font-sans text-[10px] tracking-widest text-dark/50 uppercase font-sans">
-                India &bull; Rajasthan &bull; Goa &bull; Kashmir
+                  <FiArrowRight
+                    size={21}
+                    className="shrink-0 transition-transform group-hover:translate-x-1"
+                  />
+                </a>
+
+                <p className="mt-4 text-[10px] leading-5 text-secondary/50">
+                  WhatsApp will open in a new tab or in the app. Review the
+                  prefilled message and send it to Tanay.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Closing call to action */}
+        <section className="border-t border-dark/10 px-5 py-16 sm:px-10 sm:py-20 lg:px-16">
+          <div className="mx-auto flex max-w-[1400px] flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+                Your story, through my lens
               </p>
+
+              <h2 className="font-serif text-4xl leading-tight sm:text-6xl">
+                Let's create something
+                <br />
+                worth remembering.
+              </h2>
             </div>
           </div>
-
-          {/* Booking Form (Right) */}
-          <div className="lg:col-span-7">
-            <BookingForm />
-          </div>
-
-        </div>
-      </section>
+        </section>
+      </main>
     </PageTransition>
   );
 }

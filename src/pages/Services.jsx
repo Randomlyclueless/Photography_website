@@ -1,91 +1,174 @@
-import { SERVICES } from "../data/siteData";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  FiArrowRight,
+  FiCamera,
+  FiAperture,
+  FiUsers,
+  FiBox,
+  FiBookOpen,
+  FiMap,
+} from "react-icons/fi";
 import PageTransition from "../components/PageTransition";
-import { FiArrowRight } from "react-icons/fi";
+
+const services = [
+  {
+    number: "01",
+    title: "Wildlife & Nature",
+    description:
+      "Photographs that celebrate the details, behaviours, and fleeting moments found in the natural world.",
+    image: "/Images/flamingo.png",
+    icon: FiAperture,
+  },
+  {
+    number: "02",
+    title: "Portraits & Fashion",
+    description:
+      "Expressive portraits built around personality, composition, natural emotion, and the play of light.",
+    image: "/Images/gargi.png",
+    icon: FiCamera,
+  },
+  {
+    number: "03",
+    title: "Weddings & Events",
+    description:
+      "Documenting celebrations, candid expressions, meaningful details, and moments worth revisiting.",
+    image: "/Images/lady_smiling.png",
+    icon: FiUsers,
+  },
+  {
+    number: "04",
+    title: "Commercial & Products",
+    description:
+      "Visual content for products, food, fashion, and brands, with an emphasis on detail and presentation.",
+    image: "/Images/soap.jpg",
+    icon: FiBox,
+  },
+  {
+    number: "05",
+    title: "Photography Workshops",
+    description:
+      "Learn the fundamentals of photography, understand your camera, and develop your creative eye.",
+    image: "/Images/speed.jpg",
+    icon: FiBookOpen,
+  },
+  {
+    number: "06",
+    title: "Photowalks & Mentoring",
+    description:
+      "Explore photography in practice, learn to observe light, and build confidence through guided sessions.",
+    image: "/Images/ajoba.png",
+    icon: FiMap,
+  },
+];
 
 export default function Services() {
-  const handleInquiry = (prefix) => {
-    const whatsappUrl = `https://wa.me/919876543210?text=${encodeURIComponent(prefix)}`;
-    window.open(whatsappUrl, "_blank");
-  };
-
   return (
     <PageTransition>
-      {/* Header */}
-      <section className="pt-36 pb-20 bg-secondary text-dark text-center">
-        <div className="max-w-4xl mx-auto px-6 space-y-4">
-          <span className="font-sans text-[11px] tracking-[0.35em] uppercase text-primary font-bold">
-            CREATIVE SESSIONS
-          </span>
-          <h1 className="font-serif text-5xl md:text-7xl font-light text-primary tracking-wide">
-            Services & Investment
-          </h1>
-          <p className="font-sans text-xs text-dark/50 max-w-md mx-auto leading-relaxed tracking-wider font-light font-sans">
-            Crafting tailored visual narratives for couples, creators, and premium brands. Select a session below to inquire via WhatsApp.
-          </p>
-        </div>
-      </section>
+      <main className="bg-secondary text-dark">
+        <section className="bg-primary px-5 pb-16 pt-36 text-secondary sm:px-10 sm:pb-20 md:pt-40 lg:px-16">
+          <div className="mx-auto max-w-[1400px]">
+            <p className="mb-6 text-[10px] font-bold uppercase tracking-[0.25em] text-accent">
+              What I do
+            </p>
 
-      {/* Services Grid */}
-      <section className="pb-28 bg-secondary text-dark">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-24">
-          {SERVICES.map((service, index) => {
-            const isEven = index % 2 === 0;
-            return (
-              <div
-                key={service.id}
-                className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${
-                  isEven ? "" : "lg:flex-row-reverse"
-                }`}
-              >
-                {/* Image */}
-                <div className="w-full lg:w-1/2 aspect-[4/3] bg-charcoal overflow-hidden group border border-primary/5 shadow-lg">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103"
-                    loading="lazy"
-                  />
-                </div>
-
-                {/* Details */}
-                <div className="w-full lg:w-1/2 space-y-6 text-left">
-                  <span className="font-sans text-[10px] tracking-[0.3em] uppercase text-accent font-bold">
-                    INVESTMENT FROM {service.price}
-                  </span>
-                  <h2 className="font-serif text-3xl md:text-4xl font-light text-primary tracking-wide font-serif">
-                    {service.title}
-                  </h2>
-                  <p className="font-sans text-sm text-dark/70 leading-relaxed font-light font-sans">
-                    {service.description}
-                  </p>
-
-                  <div className="py-4 border-t border-dark/10">
-                    <h4 className="font-sans text-[10px] tracking-[0.25em] uppercase text-primary font-bold mb-4">
-                      WHAT'S INCLUDED:
-                    </h4>
-                    <ul className="space-y-3 font-sans text-xs text-dark/65 leading-relaxed font-light font-sans">
-                      {service.details.map((detail, idx) => (
-                        <li key={idx} className="flex items-start space-x-2">
-                          <span className="text-accent mt-1">&bull;</span>
-                          <span>{detail}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <button
-                    onClick={() => handleInquiry(service.whatsappPrefix)}
-                    className="inline-flex items-center space-x-3 px-8 py-3.5 bg-primary text-secondary hover:bg-accent hover:text-dark transition-all duration-300 font-sans text-xs font-bold tracking-[0.25em] uppercase hover:scale-[1.02]"
-                  >
-                    <span>Inquire via WhatsApp</span>
-                    <FiArrowRight size={14} />
-                  </button>
-                </div>
+            <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-7">
+                <h1 className="font-serif text-6xl leading-[0.85] tracking-[-0.05em] sm:text-8xl">
+                  Work with
+                  <br />
+                  intention<span className="text-coral">.</span>
+                </h1>
               </div>
-            );
-          })}
-        </div>
-      </section>
+
+              <p className="max-w-lg text-sm leading-7 text-secondary/75 lg:col-span-4 lg:col-start-9">
+                From wildlife and portraits to commercial photography and
+                creative education, every project starts with curiosity and a
+                story worth telling.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 py-14 sm:px-10 sm:py-20 lg:px-16">
+          <div className="mx-auto max-w-[1400px]">
+            <div className="mb-10 flex items-center justify-between border-b border-dark/15 pb-5">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+                Photography & creative services
+              </p>
+              <span className="text-xs text-dark/50">06 services</span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+              {services.map((service, index) => {
+                const Icon = service.icon;
+
+                return (
+                  <motion.article
+                    key={service.number}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    transition={{ duration: 0.5, delay: index * 0.06 }}
+                    className="group"
+                  >
+                    <div className="relative aspect-[4/3] overflow-hidden bg-primary/10">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+
+                      <span className="absolute left-4 top-4 bg-secondary px-3 py-2 text-[9px] font-bold tracking-[0.15em] text-primary">
+                        {service.number}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between border-b border-dark/15 py-4">
+                      <h2 className="font-serif text-3xl">{service.title}</h2>
+                      <Icon size={20} className="text-primary" />
+                    </div>
+
+                    <p className="mt-4 text-sm leading-7 text-dark/65">
+                      {service.description}
+                    </p>
+
+                    <Link
+                      to="/contact"
+                      className="mt-5 inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.15em] text-primary transition-colors hover:text-coral"
+                    >
+                      Enquire about this service
+                      <FiArrowRight size={14} />
+                    </Link>
+                  </motion.article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-primary px-5 py-16 text-secondary sm:px-10 sm:py-20 lg:px-16">
+          <div className="mx-auto flex max-w-[1400px] flex-col justify-between gap-8 md:flex-row md:items-center">
+            <div>
+              <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-accent">
+                Have something in mind?
+              </p>
+              <h2 className="font-serif text-4xl sm:text-6xl">
+                Let's discuss your project.
+              </h2>
+            </div>
+
+            <Link
+              to="/contact"
+              className="flex w-fit items-center gap-4 bg-coral px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] text-white hover:bg-secondary hover:text-primary"
+            >
+              Get in touch
+              <FiArrowRight />
+            </Link>
+          </div>
+        </section>
+      </main>
     </PageTransition>
   );
 }

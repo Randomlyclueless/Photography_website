@@ -1,96 +1,237 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* ========================================
+   FRAMES BY TANAY — COLOR THEME
+   Tailwind CSS v4
+======================================== */
+
+@theme {
+  --color-primary: #4b5320;
+  --color-secondary: #f5f0e5;
+  --color-accent: #f5c928;
+  --color-dark: #20211d;
+  --color-charcoal: #303624;
+  --color-coral: #f15b3a;
+
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "Cormorant Garamond", serif;
+}
+
+/* ========================================
+   BASE STYLES
+======================================== */
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    background-color: #f5f0e5;
   }
+
   body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background-color: #F8F4EC;
-    color: #1A1A1A;
+    margin: 0;
+    min-width: 320px;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background-color: #f5f0e5;
+    color: #20211d;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Cormorant Garamond', serif;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Cormorant Garamond", serif;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background-color: #4b5320;
+    color: #f5f0e5;
   }
 }
 
-/* Custom scrollbar */
+/* ========================================
+   CUSTOM SCROLLBAR
+======================================== */
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #F8F4EC;
+  background: #f5f0e5;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #5A1E2B;
+  background: #4b5320;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #C8A96A;
+  background: #303624;
 }
 
-/* Custom selections */
-::selection {
-  background-color: #5A1E2B;
-  color: #F8F4EC;
-}
+/* ========================================
+   EDITORIAL UNDERLINE
+======================================== */
 
-/* Custom styles for luxury touch */
 .editorial-underline {
   position: relative;
   display: inline-block;
 }
+
 .editorial-underline::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
-  transform: scaleX(0);
   height: 1px;
   bottom: -2px;
   left: 0;
   background-color: currentColor;
-  transform-origin: bottom right;
+  transform: scaleX(0);
+  transform-origin: right;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
+
 .editorial-underline:hover::after {
   transform: scaleX(1);
-  transform-origin: bottom left;
+  transform-origin: left;
 }
 
-/* Glassmorphism cards */
+/* ========================================
+   GLASSMORPHISM CARDS
+======================================== */
+
 .glass-card {
-  background: rgba(248, 244, 236, 0.75);
+  background: rgba(245, 240, 229, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(90, 30, 43, 0.08);
+  border: 1px solid rgba(75, 83, 32, 0.12);
 }
 
 .dark-glass-card {
-  background: rgba(26, 26, 26, 0.8);
+  background: rgba(48, 54, 36, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(200, 169, 106, 0.15);
+  border: 1px solid rgba(245, 240, 229, 0.15);
 }
 
-/* Swiper custom overrides for luxury style */
+/* ========================================
+   SWIPER PAGINATION
+======================================== */
+
 .swiper-pagination-bullet {
-  background: #1A1A1A !important;
-  opacity: 0.2 !important;
+  background: #4b5320 !important;
+  opacity: 0.25 !important;
 }
+
 .swiper-pagination-bullet-active {
-  background: #C8A96A !important;
+  background: #f5c928 !important;
   opacity: 1 !important;
   width: 18px !important;
   border-radius: 4px !important;
   transition: all 0.3s ease !important;
 }
 
-/* Custom text outline */
+/* ========================================
+   OUTLINED TEXT
+======================================== */
+
 .text-outline {
-  -webkit-text-stroke: 1px rgba(248, 244, 236, 0.3);
+  -webkit-text-stroke: 1px rgba(245, 240, 229, 0.4);
   color: transparent;
+}
+
+/* ========================================
+   EDITORIAL PHOTOGRAPHY UTILITIES
+======================================== */
+
+.editorial-frame {
+  position: relative;
+  overflow: hidden;
+  background-color: #303624;
+}
+
+.editorial-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.2, 0.65, 0.3, 1);
+}
+
+.editorial-frame:hover img {
+  transform: scale(1.04);
+}
+
+.editorial-label {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.editorial-heading {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+}
+
+/* ========================================
+   ACCESSIBILITY
+======================================== */
+
+:focus-visible {
+  outline: 2px solid #f15b3a;
+  outline-offset: 4px;
+}
+
+/* ========================================
+   REDUCED MOTION
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

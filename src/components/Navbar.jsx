@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { FiMenu, FiX, FiInstagram } from "react-icons/fi";
+import { FiMenu, FiX, FiInstagram, FiArrowUpRight } from "react-icons/fi";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function Navbar() {
@@ -8,192 +8,258 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
+  // Update navbar appearance when scrolling.
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 30);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
-  // Close mobile menu on route change
+  // Close the mobile menu when the route changes,
+  // without setting state inside an effect.
+  const closeMenu = () => setIsOpen(false);
+
+  // Close the mobile menu with Escape.
   useEffect(() => {
-    setIsOpen(false);
-  }, [location]);
+    if (!isOpen) return;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeMenu();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
+
+  // Prevent background scrolling while the menu is open.
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Portfolio", path: "/portfolio" },
     { name: "Services", path: "/services" },
     { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" }
+    { name: "Contact", path: "/contact" },
   ];
 
-  // Check if current route is dark section (e.g. 404 is dark, or we could customize header text style)
-  const isDarkNavbarNeeded = location.pathname === "/404" || location.pathname === "/not-found";
-
+  // Keep the menu closed if browser navigation changes the route.
+  // The key also resets the menu component on navigation.
   return (
-    <>
+    <div key={location.pathname}>
+      {/* Desktop and mobile header */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
-            ? "bg-dark/95 backdrop-blur-md border-b border-secondary/5 py-4 shadow-lg text-secondary"
-            : isDarkNavbarNeeded
-            ? "bg-transparent py-6 text-secondary"
-            : "bg-transparent py-6 text-dark"
+            ? "bg-primary/95 backdrop-blur-md shadow-lg shadow-dark/10 py-3"
+            : "bg-primary py-5"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
-          <Link
-            to="/"
-            className="font-serif text-2xl md:text-3xl tracking-[0.15em] font-bold text-primary hover:text-accent transition-colors duration-300"
-            style={{ color: scrolled ? '#C8A96A' : '' }}
-          >
-            FRAMES BY TANAY
-          </Link>
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12">
+          <div className="flex items-center justify-between gap-6">
+            {/* Typographic brand — no icon */}
+            <Link
+              to="/"
+              onClick={closeMenu}
+              className="group shrink-0 font-serif text-xl sm:text-2xl tracking-tight text-secondary transition-colors hover:text-accent"
+              aria-label="Frames by Tanay — Home"
+            >
+              Frames by Tanay<span className="text-accent">.</span>
+            </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-10">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.name}
-                to={link.path}
-                className={({ isActive }) =>
-                  `font-sans text-[11px] tracking-[0.2em] uppercase transition-colors relative py-1 font-medium ${
-                    isActive
-                      ? scrolled
+            {/* Desktop navigation */}
+            <nav
+              className="hidden lg:flex items-center gap-6 xl:gap-9"
+              aria-label="Main navigation"
+            >
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.name}
+                  to={link.path}
+                  end={link.path === "/"}
+                  className={({ isActive }) =>
+                    `relative py-2 text-[10px] xl:text-[11px] font-semibold tracking-[0.16em] uppercase transition-colors duration-300 ${
+                      isActive
                         ? "text-accent"
-                        : "text-primary"
-                      : scrolled
-                      ? "text-secondary/80 hover:text-accent"
-                      : "text-dark/80 hover:text-primary"
-                  }`
-                }
-              >
-                {({ isActive }) => (
-                  <>
-                    {link.name}
-                    {isActive && (
-                      <motion.span
-                        layoutId="activeNavLine"
-                        className={`absolute bottom-0 left-0 right-0 h-[1.5px] ${
-                          scrolled ? "bg-accent" : "bg-primary"
-                        }`}
-                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                      />
-                    )}
-                  </>
-                )}
-              </NavLink>
-            ))}
+                        : "text-secondary/80 hover:text-secondary"
+                    }`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      {link.name}
+
+                      {isActive && (
+                        <motion.span
+                          layoutId="activeNavLine"
+                          className="absolute left-0 right-0 -bottom-0.5 h-px bg-accent"
+                          transition={{
+                            type: "spring",
+                            stiffness: 350,
+                            damping: 30,
+                          }}
+                        />
+                      )}
+                    </>
+                  )}
+                </NavLink>
+              ))}
+            </nav>
+
+            {/* Desktop booking button */}
             <Link
               to="/contact"
-              className={`px-6 py-2 border text-xs font-sans tracking-[0.2em] uppercase transition-all duration-300 ${
-                scrolled
-                  ? "border-accent text-accent hover:bg-accent hover:text-dark"
-                  : "border-primary text-primary hover:bg-primary hover:text-secondary"
-              }`}
+              className="hidden lg:inline-flex items-center gap-2 border border-secondary/60 px-4 xl:px-5 py-2.5 text-[10px] font-semibold tracking-[0.15em] uppercase text-secondary transition-all duration-300 hover:bg-secondary hover:text-primary"
             >
-              Book Now
+              Book a shoot
+              <FiArrowUpRight size={14} />
             </Link>
-          </nav>
 
-          {/* Mobile Navigation Toggle */}
-          <div className="md:hidden flex items-center">
+            {/* Mobile menu button */}
             <button
+              type="button"
               onClick={() => setIsOpen(true)}
-              className={`transition-colors focus:outline-none ${
-                scrolled ? "text-secondary hover:text-accent" : "text-dark hover:text-primary"
-              }`}
-              aria-label="Open Menu"
+              className="lg:hidden flex items-center justify-center p-2 text-secondary transition-colors hover:text-accent"
+              aria-label="Open navigation menu"
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
             >
-              <FiMenu size={24} />
+              <FiMenu size={25} strokeWidth={1.5} />
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile navigation overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: "-100%" }}
+            id="mobile-navigation"
+            initial={{ opacity: 0, y: "-2%" }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: "-100%" }}
-            transition={{ type: "spring", bounce: 0.1, duration: 0.6 }}
-            className="fixed inset-0 z-50 bg-dark/98 flex flex-col justify-between px-6 py-12 text-secondary"
+            exit={{ opacity: 0, y: "-2%" }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-50 flex flex-col bg-primary px-6 py-7 text-secondary sm:px-10 sm:py-9"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
           >
-            {/* Background elements */}
-            <div className="absolute top-[20%] right-[10%] text-[20vw] font-serif text-secondary/[0.015] uppercase pointer-events-none select-none">
+            {/* Decorative background lettering */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute top-[28%] left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-serif text-[25vw] leading-none text-secondary/[0.035]"
+            >
               TANAY
             </div>
 
-            <div className="flex justify-between items-center border-b border-secondary/10 pb-6">
-              <span className="font-serif text-xl tracking-[0.1em] text-accent">FRAMES BY TANAY</span>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-secondary hover:text-accent transition-colors"
-                aria-label="Close Menu"
+            {/* Menu header */}
+            <div className="relative z-10 flex items-center justify-between border-b border-secondary/20 pb-5">
+              <Link
+                to="/"
+                onClick={closeMenu}
+                className="font-serif text-xl tracking-tight"
               >
-                <FiX size={26} />
+                Frames by Tanay<span className="text-accent">.</span>
+              </Link>
+
+              <button
+                type="button"
+                onClick={closeMenu}
+                className="p-2 text-secondary transition-colors hover:text-accent"
+                aria-label="Close navigation menu"
+              >
+                <FiX size={27} strokeWidth={1.5} />
               </button>
             </div>
 
-            <nav className="flex flex-col space-y-6 text-center my-auto">
-              {navLinks.map((link, idx) => (
+            {/* Menu links */}
+            <nav
+              className="relative z-10 flex flex-1 flex-col justify-center gap-1"
+              aria-label="Mobile navigation"
+            >
+              {navLinks.map((link, index) => (
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.08, duration: 0.4 }}
                   key={link.name}
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: index * 0.07,
+                    duration: 0.35,
+                  }}
                 >
-                  <Link
+                  <NavLink
                     to={link.path}
-                    onClick={() => setIsOpen(false)}
-                    className="font-serif text-3xl tracking-wider text-secondary hover:text-accent transition-colors block"
+                    end={link.path === "/"}
+                    onClick={closeMenu}
+                    className={({ isActive }) =>
+                      `flex items-center justify-between border-b border-secondary/10 py-4 font-serif text-3xl transition-colors sm:text-4xl ${
+                        isActive
+                          ? "text-accent"
+                          : "text-secondary hover:text-accent"
+                      }`
+                    }
                   >
                     {link.name}
-                  </Link>
+                    <FiArrowUpRight size={20} strokeWidth={1.3} />
+                  </NavLink>
                 </motion.div>
               ))}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navLinks.length * 0.08, duration: 0.4 }}
-                className="pt-6"
+
+              <Link
+                to="/contact"
+                onClick={closeMenu}
+                className="mt-7 flex items-center justify-center gap-2 bg-coral px-6 py-4 text-sm font-semibold tracking-[0.14em] uppercase text-white transition-colors hover:bg-secondary hover:text-primary"
               >
-                <Link
-                  to="/contact"
-                  onClick={() => setIsOpen(false)}
-                  className="inline-block px-8 py-3 bg-accent text-dark font-sans text-sm tracking-[0.2em] uppercase transition-colors hover:bg-secondary hover:text-dark"
-                >
-                  Book a Session
-                </Link>
-              </motion.div>
+                Book a photography session
+                <FiArrowUpRight size={17} />
+              </Link>
             </nav>
 
-            <div className="flex flex-col items-center space-y-4 border-t border-secondary/10 pt-6">
-              <div className="flex space-x-6">
-                <a
-                  href="https://www.instagram.com/random_clicks.dng"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-secondary hover:text-accent transition-colors p-2 border border-secondary/10 rounded-full hover:border-accent"
-                >
-                  <FiInstagram size={20} />
-                </a>
+            {/* Menu footer */}
+            <div className="relative z-10 flex items-center justify-between border-t border-secondary/20 pt-5">
+              <div>
+                <p className="text-[9px] uppercase tracking-[0.2em] text-secondary/50">
+                  Photography & visual storytelling
+                </p>
+
+                <p className="mt-2 text-[10px] tracking-wider text-secondary/70">
+                  © {new Date().getFullYear()} Frames by Tanay
+                </p>
               </div>
-              <p className="text-secondary/40 text-[9px] tracking-[0.25em] font-sans uppercase">
-                &copy; 2026 Frames By Tanay. All Rights Reserved.
-              </p>
+
+              <a
+                href="https://www.instagram.com/random_clicks.dng"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit Instagram"
+                className="flex h-11 w-11 items-center justify-center border border-secondary/30 text-secondary transition-colors hover:border-accent hover:text-accent"
+              >
+                <FiInstagram size={19} />
+              </a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 }

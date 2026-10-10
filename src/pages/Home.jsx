@@ -1,201 +1,157 @@
-import Hero from "../components/Hero";
-import Gallery from "../components/Gallery";
-import BusinessStats from "../components/BusinessStats";
-import Testimonials from "../components/Testimonials";
-import FAQ from "../components/FAQ";
-import InstagramFeed from "../components/InstagramFeed";
-import PageTransition from "../components/PageTransition";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { FiArrowRight } from "react-icons/fi";
+import Hero from "../components/Hero";
+import PageTransition from "../components/PageTransition";
+
+const featured = [
+  {
+    title: "Wild at Heart",
+    category: "Wildlife",
+    image: "/Images/flamingo.png",
+    size: "wide",
+  },
+  {
+    title: "Expressions",
+    category: "Portraits",
+    image: "/Images/gargi.png",
+    size: "normal",
+  },
+  {
+    title: "Little Details",
+    category: "Macro",
+    image: "/Images/chipkali.png",
+    size: "normal",
+  },
+  {
+    title: "Stories of Celebration",
+    category: "Weddings",
+    image: "/Images/lady_smiling.png",
+    size: "wide",
+  },
+];
 
 export default function Home() {
   return (
     <PageTransition>
-      {/* Hero Section */}
-      <Hero />
+      <main className="bg-secondary text-dark">
+        <Hero />
 
-      {/* About Preview Section */}
-      <section className="py-28 bg-secondary text-dark relative">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="relative aspect-[3/4] overflow-hidden group border border-primary/5 bg-charcoal">
-            <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"
-              alt="Tanay Kardile Portrait"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
+        <section className="px-5 py-20 sm:px-10 lg:px-16 lg:py-28">
+          <div className="mx-auto max-w-[1400px]">
+            <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+              <div>
+                <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
+                  A few favourites
+                </p>
+                <h2 className="font-serif text-5xl leading-tight sm:text-7xl">
+                  Through my lens<span className="text-coral">.</span>
+                </h2>
+              </div>
+
+              <Link
+                to="/portfolio"
+                className="flex w-fit items-center gap-3 border-b border-primary pb-2 text-[10px] font-bold uppercase tracking-[0.15em] hover:text-primary"
+              >
+                View all photographs
+                <FiArrowRight />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+              {featured.map((item, index) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className={`group ${
+                    item.size === "wide" ? "lg:col-span-7" : "lg:col-span-5"
+                  }`}
+                >
+                  <Link to="/portfolio" className="block">
+                    <div className="aspect-[4/3] overflow-hidden bg-primary/10">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
+
+                    <div className="flex items-end justify-between border-b border-dark/15 py-4">
+                      <div>
+                        <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.2em] text-primary">
+                          {item.category}
+                        </p>
+                        <h3 className="font-serif text-3xl sm:text-4xl">
+                          {item.title}
+                        </h3>
+                      </div>
+                      <FiArrowRight className="mb-2 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
-          <div className="space-y-8 text-left">
-            <span className="font-sans text-[11px] tracking-[0.3em] uppercase text-primary font-bold block">
-              ABOUT THE ARTIST
-            </span>
-            <h2 className="font-serif text-4xl md:text-6xl font-light text-primary leading-tight">
-              Capturing light, <br />
-              preserving emotion.
-            </h2>
-            <p className="font-sans text-sm text-dark/70 leading-relaxed font-light">
-              Hi, I'm Tanay Kardile. Over the past 5+ years, I have traveled across India and beyond, documenting raw human emotions, cinematic landscapes, and high-fashion aesthetics. My creative philosophy is rooted in minimalism, letting the subject tell their story through natural lighting and organic perspective.
-            </p>
-            <p className="font-sans text-sm text-dark/70 leading-relaxed font-light">
-              Whether it's the grandeur of a destination wedding, an intimate studio portrait session, or the wild, untamed expressions of nature, I believe in creating frames that feel timeless and editorial.
-            </p>
-            <div className="pt-4">
+        </section>
+
+        <section className="bg-primary px-5 py-20 text-secondary sm:px-10 lg:px-16 lg:py-28">
+          <div className="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-2 lg:items-center">
+            <div>
+              <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.25em] text-accent">
+                The person behind the camera
+              </p>
+              <h2 className="font-serif text-5xl leading-tight sm:text-7xl">
+                More than a photograph.
+                <br />A feeling to remember.
+              </h2>
+            </div>
+
+            <div>
+              <p className="max-w-xl text-sm leading-8 text-secondary/75">
+                From the smallest details in nature to the expressions that make
+                a portrait unforgettable, photography is my way of noticing the
+                world. I explore wildlife, portraits, events, and commercial
+                work through a personal and curious perspective.
+              </p>
+
               <Link
                 to="/about"
-                className="inline-flex items-center space-x-3 text-xs font-sans font-bold tracking-[0.2em] uppercase text-primary hover:text-accent transition-colors group"
+                className="mt-7 inline-flex items-center gap-3 border-b border-accent pb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-accent hover:text-secondary"
               >
-                <span>Read Full Biography</span>
-                <FiArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+                Discover my story
+                <FiArrowRight />
               </Link>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Featured Works Section */}
-      <section className="py-24 bg-secondary text-dark border-t border-primary/5">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 text-left">
+        <section className="px-5 py-20 sm:px-10 lg:px-16 lg:py-28">
+          <div className="mx-auto flex max-w-[1400px] flex-col justify-between gap-8 md:flex-row md:items-end">
             <div>
-              <span className="font-sans text-[11px] tracking-[0.3em] uppercase text-primary font-bold block mb-3">
-                PORTFOLIO PREVIEW
-              </span>
-              <h2 className="font-serif text-3xl md:text-5xl font-light text-primary tracking-wide">
-                Featured Photographs
+              <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
+                Have a story to tell?
+              </p>
+              <h2 className="font-serif text-5xl leading-tight sm:text-7xl">
+                Let's create something
+                <br />
+                worth remembering.
               </h2>
             </div>
-            <Link
-              to="/portfolio"
-              className="inline-flex items-center space-x-3 text-xs font-sans font-bold tracking-[0.2em] uppercase text-primary hover:text-accent transition-colors group"
-            >
-              <span>View Full Gallery</span>
-              <FiArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-300" />
-            </Link>
-          </div>
 
-          <Gallery limit={6} />
-        </div>
-      </section>
-
-      {/* Business Stats Counter (dark backdrop) */}
-      <BusinessStats />
-
-      {/* Services Preview Section */}
-      <section className="py-28 bg-secondary text-dark">
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 text-left">
-            <div>
-              <span className="font-sans text-[11px] tracking-[0.3em] uppercase text-primary font-bold block mb-3">
-                SERVICES
-              </span>
-              <h2 className="font-serif text-3xl md:text-5xl font-light text-primary tracking-wide">
-                Creative Offerings
-              </h2>
-            </div>
-            <Link
-              to="/services"
-              className="inline-flex items-center space-x-3 text-xs font-sans font-bold tracking-[0.2em] uppercase text-primary hover:text-accent transition-colors group"
-            >
-              <span>View All Services</span>
-              <FiArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-300" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-            {/* Wedding Card */}
-            <div className="border border-primary/5 p-8 flex flex-col justify-between h-[380px] hover:border-primary/20 transition-all duration-300 bg-secondary/30 relative group">
-              <div>
-                <h3 className="font-serif text-2xl font-light text-primary mb-4">Wedding Storytelling</h3>
-                <p className="font-sans text-xs text-dark/60 leading-relaxed font-light">
-                  Cinematic, luxurious wedding coverage documenting the grand celebration and intimate raw emotion. Available for travel worldwide.
-                </p>
-              </div>
-              <div className="space-y-4">
-                <p className="font-sans text-[10px] tracking-widest text-accent uppercase font-bold">Starting from ₹1,50,000</p>
-                <Link
-                  to="/services"
-                  className="font-sans text-[10px] tracking-widest text-primary uppercase font-bold inline-flex items-center space-x-2 group-hover:text-accent transition-colors"
-                >
-                  <span>Explore Details</span>
-                  <FiArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Portraits Card */}
-            <div className="border border-primary/5 p-8 flex flex-col justify-between h-[380px] hover:border-primary/20 transition-all duration-300 bg-secondary/30 relative group">
-              <div>
-                <h3 className="font-serif text-2xl font-light text-primary mb-4">Editorial Portraits</h3>
-                <p className="font-sans text-xs text-dark/60 leading-relaxed font-light">
-                  Personal, business, or lifestyle portraits crafted with beautiful natural lighting or specialized studio setups.
-                </p>
-              </div>
-              <div className="space-y-4">
-                <p className="font-sans text-[10px] tracking-widest text-accent uppercase font-bold">Starting from ₹25,000</p>
-                <Link
-                  to="/services"
-                  className="font-sans text-[10px] tracking-widest text-primary uppercase font-bold inline-flex items-center space-x-2 group-hover:text-accent transition-colors"
-                >
-                  <span>Explore Details</span>
-                  <FiArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Drone Landscape Card */}
-            <div className="border border-primary/5 p-8 flex flex-col justify-between h-[380px] hover:border-primary/20 transition-all duration-300 bg-secondary/30 relative group">
-              <div>
-                <h3 className="font-serif text-2xl font-light text-primary mb-4">Drone Aerials</h3>
-                <p className="font-sans text-xs text-dark/60 leading-relaxed font-light">
-                  Breathtaking high-altitude perspectives for luxury properties, tourism boards, destinations, and creative films.
-                </p>
-              </div>
-              <div className="space-y-4">
-                <p className="font-sans text-[10px] tracking-widest text-accent uppercase font-bold">Starting from ₹40,000</p>
-                <Link
-                  to="/services"
-                  className="font-sans text-[10px] tracking-widest text-primary uppercase font-bold inline-flex items-center space-x-2 group-hover:text-accent transition-colors"
-                >
-                  <span>Explore Details</span>
-                  <FiArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <Testimonials />
-
-      {/* FAQ Accordion */}
-      <FAQ />
-
-      {/* CTA Banner (dark background) */}
-      <section className="bg-charcoal text-secondary py-28 relative border-t border-secondary/5">
-        <div className="max-w-5xl mx-auto px-6 text-center space-y-8">
-          <span className="font-sans text-[11px] tracking-[0.3em] uppercase text-accent font-semibold">
-            WORK WITH US
-          </span>
-          <h2 className="font-serif text-4xl md:text-6xl font-light tracking-wide leading-tight">
-            Have a project in mind? <br />
-            Let’s create something timeless.
-          </h2>
-          <p className="font-sans text-sm text-secondary/60 font-light max-w-lg mx-auto leading-relaxed">
-            Reach out today to discuss your vision, check availability for specific dates, or request a custom pricing package.
-          </p>
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               to="/contact"
-              className="w-full sm:w-auto px-10 py-4 bg-accent text-dark hover:bg-secondary transition-all duration-300 font-sans text-xs font-semibold tracking-[0.2em] uppercase hover:scale-[1.02]"
+              className="flex w-fit items-center gap-4 bg-coral px-6 py-4 text-[10px] font-bold uppercase tracking-[0.15em] text-white transition-colors hover:bg-primary"
             >
-              Inquire Booking
+              Start a conversation
+              <FiArrowRight />
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* Instagram Feed Mock */}
-      <InstagramFeed />
+        </section>
+      </main>
     </PageTransition>
   );
 }
