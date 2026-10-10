@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #F8F4EC;
+    color: #1A1A1A;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F8F4EC;
+}
+::-webkit-scrollbar-thumb {
+  background: #5A1E2B;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C8A96A;
+}
+
+/* Custom selections */
+::selection {
+  background-color: #5A1E2B;
+  color: #F8F4EC;
+}
+
+/* Custom styles for luxury touch */
+.editorial-underline {
+  position: relative;
+  display: inline-block;
+}
+.editorial-underline::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transform-origin: bottom right;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.editorial-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Glassmorphism cards */
+.glass-card {
+  background: rgba(248, 244, 236, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(90, 30, 43, 0.08);
+}
+
+.dark-glass-card {
+  background: rgba(26, 26, 26, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 169, 106, 0.15);
+}
+
+/* Swiper custom overrides for luxury style */
+.swiper-pagination-bullet {
+  background: #1A1A1A !important;
+  opacity: 0.2 !important;
+}
+.swiper-pagination-bullet-active {
+  background: #C8A96A !important;
+  opacity: 1 !important;
+  width: 18px !important;
+  border-radius: 4px !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Custom text outline */
+.text-outline {
+  -webkit-text-stroke: 1px rgba(248, 244, 236, 0.3);
+  color: transparent;
+}
